@@ -20,7 +20,6 @@ BuildRequires:	vala
 BuildRequires:	vala-libgee0.6
 BuildRequires:	which
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	glib2 >= 1:2.26.0
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -83,11 +82,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_icon_cache hicolor
-%glib_compile_schemas
 
 %postun
 %update_icon_cache hicolor
-%glib_compile_schemas
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)

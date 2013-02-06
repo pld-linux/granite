@@ -55,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
 %endif
 
+%{__rm} $RPM_BUILD_ROOT%{_localedir}/rue
+%{__rm} $RPM_BUILD_ROOT%{_localedir}/sma
+
 %find_lang %{name}
 
 %clean

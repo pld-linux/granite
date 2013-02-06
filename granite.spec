@@ -1,21 +1,24 @@
 Summary:	An extension of GTK
 Name:		granite
-Version:	0.1.1
-Release:	1
+Version:	0.2.0
+Release:	0.1
 License:	GPL v3
 Group:		X11/Libraries
 URL:		http://elementaryos.org/
-Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{version}.tar.gz
-# Source0-md5:	1bc0bc2df9176940097a26f3d031034a
+#Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{version}.tar.gz
+# bzr branch lp:granite && tar -caf granite-0.2.0-bzr527.tar.bz2 --exclude-vcs granite
+Source0:	%{name}-%{version}-bzr527.tar.bz2
+# Source0-md5:	8ecc6754b99aff6f0c31d2313cf552ea
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
+BuildRequires:	sed >= 4.0
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.3.14
 BuildRequires:	libgee0.6-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
-BuildRequires:	vala
+BuildRequires:	vala >= 0.16.1
 BuildRequires:	vala-libgee0.6
 BuildRequires:	which
 Requires:	%{name}-libs = %{version}-%{release}
@@ -45,7 +48,12 @@ Requires:	%{name}-libs = %{version}-%{release}
 This package contains the header files for libgranite.
 
 %prep
-%setup -q
+%setup -qc
+mv %{name}/* .
+
+%{__sed} -i -e '
+	s,${CMAKE_INSTALL_PREFIX}/lib,${CMAKE_INSTALL_LIBDIR},
+' lib/CMakeLists.txt
 
 %build
 install -d build
@@ -60,10 +68,6 @@ cd build
 rm -rf $RPM_BUILD_ROOT
 %{__make} install -C build \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%if "%{_lib}" != "lib"
-mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
-%endif
 
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/rue
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sma
@@ -90,17 +94,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/granite-demo
 %{_iconsdir}/hicolor/*/actions/application-menu.svg
 %{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
-%{_libdir}/girepository-1.0/Granite-0.1.1.typelib
+%{_libdir}/girepository-1.0/Granite-1.0.typelib
 %{_datadir}/vala/vapi/granite.*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgranite.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/%{name}
 %{_pkgconfigdir}/granite.pc
 %{_libdir}/libgranite.so
-%{_datadir}/gir-1.0/Granite-0.1.1.gir
+%{_datadir}/gir-1.0/Granite-1.0.gir

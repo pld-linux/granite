@@ -18,6 +18,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	vala
 BuildRequires:	vala-libgee0.6
 BuildRequires:	which
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -25,17 +26,20 @@ Granite is an extension of GTK. Among other things, it provides the
 commonly-used widgets such as modeswitchers, welcome screens,
 AppMenus, search bars, and more found in elementary apps.
 
+%package libs
+Summary:	Library for libgranite
+Group:		Libraries
+
+%description libs
+Library for libgranite.
+
 %package devel
 Summary:	Header files for libgranite
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
-Granite is an extension of GTK. Among other things, it provides the
-commonly-used widgets such as modeswitchers, welcome screens,
-AppMenus, search bars, and more found in elementary apps.
-
-This package contains the header files
+This package contains the header files for libgranite.
 
 %prep
 %setup -q
@@ -63,19 +67,22 @@ mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS
 %attr(755,root,root) %{_bindir}/granite-demo
-%attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
 %{_iconsdir}/hicolor/*/actions/application-menu.svg
 %{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
 %{_libdir}/girepository-1.0/Granite-0.1.1.typelib
 %{_datadir}/vala/vapi/granite.*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
 
 %files devel
 %defattr(644,root,root,755)

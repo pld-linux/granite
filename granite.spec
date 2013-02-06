@@ -1,11 +1,11 @@
 Summary:	An extension of GTK
 Name:		granite
-Version:	0.1.0
-Release:	21.1
+Version:	0.1.1
+Release:	1
 License:	GPL v3
 Group:		X11/Libraries
 URL:		http://elementaryos.org/
-Source0:	%{name}_%{version}.tar.gz
+Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{version}.tar.gz
 # Source0-md5:	c25c4bd409a1dbe2e5fc99c305e1dc36
 BuildRequires:	cmake
 BuildRequires:	glib2-devel
@@ -65,7 +65,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/granite-demo
 %attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
-%{_libdir}/girepository-1.0/Granite-0.1.typelib
+%{_iconsdir}/hicolor/*/actions/application-menu.svg
+%{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
+%{_libdir}/girepository-1.0/Granite-0.1.1.typelib
 %{_datadir}/vala/vapi/granite.*
 
 %files devel
@@ -73,4 +75,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_pkgconfigdir}/granite.pc
 %{_libdir}/libgranite.so
-%{_datadir}/gir-1.0/Granite-0.1.gir
+%{_datadir}/gir-1.0/Granite-0.1.1.gir

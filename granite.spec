@@ -91,7 +91,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/actions/application-menu.svg
 %{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
 %{_libdir}/girepository-1.0/Granite-0.1.1.typelib
-%{_datadir}/vala/vapi/granite.*
 
 %files libs
 %defattr(644,root,root,755)
@@ -104,3 +103,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/granite.pc
 %{_libdir}/libgranite.so
 %{_datadir}/gir-1.0/Granite-0.1.1.gir
+%{_datadir}/vala/vapi/granite.*

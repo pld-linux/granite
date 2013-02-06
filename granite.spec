@@ -1,7 +1,7 @@
 Summary:	An extension of GTK
 Name:		granite
 Version:	0.1.1
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		X11/Libraries
 URL:		http://elementaryos.org/
@@ -10,6 +10,7 @@ Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{versio
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
+BuildRequires:	sed >= 4.0
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.3.14
 BuildRequires:	libgee0.6-devel
@@ -47,6 +48,14 @@ This package contains the header files for libgranite.
 %prep
 %setup -q
 
+%{__sed} -i -e '
+	s,${CMAKE_INSTALL_PREFIX}/lib,${CMAKE_INSTALL_LIBDIR},
+' lib/CMakeLists.txt
+
+%{__sed} -i -e '
+	s,DESTINATION lib/girepository-1.0/,DESTINATION lib${LIB_SUFFIX}/girepository-1.0/,
+' cmake/GObjectIntrospectionMacros.cmake
+
 %build
 install -d build
 cd build
@@ -60,10 +69,6 @@ cd build
 rm -rf $RPM_BUILD_ROOT
 %{__make} install -C build \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%if "%{_lib}" != "lib"
-mv $RPM_BUILD_ROOT%{_prefix}/lib $RPM_BUILD_ROOT%{_libdir}
-%endif
 
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/rue
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sma

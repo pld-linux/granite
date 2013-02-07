@@ -1,7 +1,7 @@
 Summary:	An extension of GTK
 Name:		granite
 Version:	0.1.1
-Release:	2
+Release:	3
 License:	GPL v3
 Group:		X11/Libraries
 URL:		http://elementaryos.org/
@@ -10,18 +10,19 @@ Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{versio
 BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel
-BuildRequires:	sed >= 4.0
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.3.14
 BuildRequires:	libgee0.6-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRequires:	vala
 BuildRequires:	vala-libgee0.6
 BuildRequires:	which
-Requires:	%{name}-libs = %{version}-%{release}
+Requires(post,postun):	/sbin/ldconfig
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
+Obsoletes:	granite-libs < 0.1.1-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,17 +30,10 @@ Granite is an extension of GTK. Among other things, it provides the
 commonly-used widgets such as modeswitchers, welcome screens,
 AppMenus, search bars, and more found in elementary apps.
 
-%package libs
-Summary:	Library for libgranite
-Group:		Libraries
-
-%description libs
-Library for libgranite.
-
 %package devel
 Summary:	Header files for libgranite
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files for libgranite.
@@ -77,27 +71,23 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	libs -p /sbin/ldconfig
-%postun	libs -p /sbin/ldconfig
-
 %post
+/sbin/ldconfig
 %update_icon_cache hicolor
 
 %postun
+/sbin/ldconfig
 %update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS
 %attr(755,root,root) %{_bindir}/granite-demo
+%attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
 %{_iconsdir}/hicolor/*/actions/application-menu.svg
 %{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
 %{_libdir}/girepository-1.0/Granite-0.1.1.typelib
-
-%files libs
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
 
 %files devel
 %defattr(644,root,root,755)

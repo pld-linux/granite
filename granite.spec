@@ -8,7 +8,7 @@ URL:		http://elementaryos.org/
 Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{version}.tar.gz
 # Source0-md5:	1bc0bc2df9176940097a26f3d031034a
 BuildRequires:	cmake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.3.14

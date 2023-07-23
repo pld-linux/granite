@@ -1,12 +1,13 @@
 Summary:	An extension of GTK
+Summary(pl.UTF-8):	Rozszerzenie GTK
 Name:		granite
 Version:	0.1.1
 Release:	3
 License:	GPL v3
 Group:		X11/Libraries
-URL:		http://elementaryos.org/
 Source0:	https://launchpad.net/granite/0.x/%{version}/+download/%{name}-%{version}.tar.gz
 # Source0-md5:	1bc0bc2df9176940097a26f3d031034a
+URL:		http://elementaryos.org/
 BuildRequires:	cmake
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel
@@ -30,13 +31,22 @@ Granite is an extension of GTK. Among other things, it provides the
 commonly-used widgets such as modeswitchers, welcome screens,
 AppMenus, search bars, and more found in elementary apps.
 
+%description -l pl.UTF-8
+Granite to rozszerzenie GTK. Dostarcza między innymi takie popularne
+widżety, jak przełączniki trybów, ekrany powitalne, AppMenu, paski
+wyszukiwania i inne, jakie można spotkać w aplikacjach elementary.
+
 %package devel
 Summary:	Header files for libgranite
+Summary(pl.UTF-8):	Pliki nagłówkowe libgranite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files for libgranite.
+
+%description devel -l pl.UTF-8
+Ten pakiet zawiera pliki nagłówkowe libgranite.
 
 %prep
 %setup -q
@@ -60,11 +70,12 @@ cd build
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install -C build \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/rue
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/sma
+# not supported by glibc (as of 2.37)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{rue,sma}
 
 %find_lang %{name}
 

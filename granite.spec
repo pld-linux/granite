@@ -1,24 +1,25 @@
 Summary:	An extension of GTK
 Summary(pl.UTF-8):	Rozszerzenie GTK
 Name:		granite
-Version:	0.5
+Version:	5.2.0
 Release:	1
 License:	GPL v3
 Group:		X11/Libraries
 #Source0Download: https://github.com/elementary/granite/releases
 Source0:	https://github.com/elementary/granite/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	20b7a7c0ad4f000f4e4d7308db2abbf8
+# Source0-md5:	083f692639e0f7f9b25e9f00ff1295f4
 URL:		http://elementaryos.org/
 BuildRequires:	cmake >= 2.8
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk+3-devel >= 3.3.14
+BuildRequires:	gtk+3-devel >= 3.22
 BuildRequires:	libgee-devel >= 0.8
 BuildRequires:	pkgconfig
-BuildRequires:	vala >= 2:0.23.2
+BuildRequires:	vala >= 2:0.40
 BuildRequires:	vala-libgee >= 0.8
 Requires(post,postun):	/sbin/ldconfig
+Requires:	gtk+3 >= 3.22
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Obsoletes:	granite-libs < 0.1.1-3
@@ -39,6 +40,7 @@ Summary:	Header files for libgranite
 Summary(pl.UTF-8):	Pliki nagłówkowe libgranite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	gtk+3-devel >= 3.22
 
 %description devel
 This package contains the header files for libgranite.
@@ -51,7 +53,7 @@ Summary:	Vala API for libgranite library
 Summary(pl.UTF-8):	API języka Vala do biblioteki libgranite
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala >= 2:0.23.2
+Requires:	vala >= 2:0.40
 Requires:	vala-libgee >= 0.8
 BuildArch:	noarch
 
@@ -101,15 +103,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/granite-demo
 %attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
+%{_libdir}/girepository-1.0/Granite-1.0.typelib
 %{_iconsdir}/hicolor/*/actions/application-menu.svg
 %{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
-%{_libdir}/girepository-1.0/Granite-0.1.1.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/%{name}
-%{_pkgconfigdir}/granite.pc
 %{_libdir}/libgranite.so
-%{_datadir}/gir-1.0/Granite-0.1.1.gir
+%{_includedir}/%{name}
+%{_datadir}/gir-1.0/Granite-1.0.gir
+%{_pkgconfigdir}/granite.pc
+
+%files -n vala-granite
+%defattr(644,root,root,755)
 %{_datadir}/vala/vapi/granite.deps
 %{_datadir}/vala/vapi/granite.vapi

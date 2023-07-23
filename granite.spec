@@ -1,24 +1,28 @@
 Summary:	An extension of GTK
 Summary(pl.UTF-8):	Rozszerzenie GTK
 Name:		granite
-Version:	5.2.0
+Version:	5.5.0
 Release:	1
 License:	GPL v3
 Group:		X11/Libraries
 #Source0Download: https://github.com/elementary/granite/releases
 Source0:	https://github.com/elementary/granite/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	083f692639e0f7f9b25e9f00ff1295f4
+# Source0-md5:	bd245484e9cad3ddb235d0a9db4811b9
 URL:		http://elementaryos.org/
-BuildRequires:	cmake >= 2.8
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	glib2-devel >= 1:2.50
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk+3-devel >= 3.22
 BuildRequires:	libgee-devel >= 0.8
+BuildRequires:	meson >= 0.48.2
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	vala >= 2:0.40
 BuildRequires:	vala-libgee >= 0.8
 Requires(post,postun):	/sbin/ldconfig
+Requires:	glib2 >= 1:2.50
 Requires:	gtk+3 >= 3.22
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -40,6 +44,7 @@ Summary:	Header files for libgranite
 Summary(pl.UTF-8):	Pliki nagłówkowe libgranite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.50
 Requires:	gtk+3-devel >= 3.22
 
 %description devel
@@ -67,22 +72,19 @@ API języka Vala do biblioteki libgranite.
 %setup -q
 
 %build
-install -d build
-cd build
-%cmake \
-	-DGSETTINGS_COMPILE=OFF \
-	-DICON_UPDATE=OFF \
-	..
-%{__make}
+%meson build \
+	--default-library=shared \
+	-Ddocumentation=true
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install -C build \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
 # not supported by glibc (as of 2.37)
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{rue,sma}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,rue,sma}
 
 %find_lang %{name}
 
@@ -99,18 +101,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS README.md
+%doc README.md
 %attr(755,root,root) %{_bindir}/granite-demo
 %attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgranite.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgranite.so.5
 %{_libdir}/girepository-1.0/Granite-1.0.typelib
-%{_iconsdir}/hicolor/*/actions/application-menu.svg
-%{_iconsdir}/hicolor/*/actions/application-menu-symbolic.svg
+%{_datadir}/metainfo/granite.appdata.xml
+%{_desktopdir}/io.elementary.granite.demo.desktop
+%{_iconsdir}/hicolor/*x*/actions/appointment.svg
+%{_iconsdir}/hicolor/*x*/actions/open-menu.svg
+%{_iconsdir}/hicolor/scalable/actions/open-menu-symbolic.svg
 
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libgranite.so
-%{_includedir}/%{name}
+%{_includedir}/granite
 %{_datadir}/gir-1.0/Granite-1.0.gir
 %{_pkgconfigdir}/granite.pc
 

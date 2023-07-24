@@ -1,6 +1,7 @@
-Summary:	An extension of GTK
-Summary(pl.UTF-8):	Rozszerzenie GTK
+Summary:	An extension of GTK+ 3
+Summary(pl.UTF-8):	Rozszerzenie GTK+ 3
 Name:		granite
+# keep 6.x here (last version for GTK+ 3)
 Version:	6.2.0
 Release:	1
 License:	GPL v3
@@ -22,9 +23,9 @@ BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	vala >= 2:0.48
 BuildRequires:	vala-libgee >= 0.8
 Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	gtk-update-icon-cache
 Requires:	glib2 >= 1:2.50
 Requires:	gtk+3 >= 3.22
-Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Obsoletes:	granite-libs < 0.1.1-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

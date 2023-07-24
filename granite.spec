@@ -3,7 +3,7 @@ Summary(pl.UTF-8):	Rozszerzenie GTK+ 3
 Name:		granite
 # keep 6.x here (last version for GTK+ 3)
 Version:	6.2.0
-Release:	1
+Release:	2
 License:	GPL v3
 Group:		X11/Libraries
 #Source0Download: https://github.com/elementary/granite/releases
@@ -86,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 
 # not supported by glibc (as of 2.37)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,rue,sma}
+# no generic variant supported, zh_{CN,TW} already present
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/zh
 
 %find_lang %{name}
 

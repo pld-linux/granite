@@ -1,13 +1,13 @@
 Summary:	An extension of GTK
 Summary(pl.UTF-8):	Rozszerzenie GTK
 Name:		granite
-Version:	5.5.0
+Version:	6.2.0
 Release:	1
 License:	GPL v3
 Group:		X11/Libraries
 #Source0Download: https://github.com/elementary/granite/releases
 Source0:	https://github.com/elementary/granite/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	bd245484e9cad3ddb235d0a9db4811b9
+# Source0-md5:	b5cb2159d784020667c87d21f82157c1
 URL:		http://elementaryos.org/
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.50
@@ -19,7 +19,7 @@ BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
-BuildRequires:	vala >= 2:0.40
+BuildRequires:	vala >= 2:0.48
 BuildRequires:	vala-libgee >= 0.8
 Requires(post,postun):	/sbin/ldconfig
 Requires:	glib2 >= 1:2.50
@@ -58,7 +58,7 @@ Summary:	Vala API for libgranite library
 Summary(pl.UTF-8):	API języka Vala do biblioteki libgranite
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala >= 2:0.40
+Requires:	vala >= 2:0.48
 Requires:	vala-libgee >= 0.8
 BuildArch:	noarch
 
@@ -104,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md
 %attr(755,root,root) %{_bindir}/granite-demo
 %attr(755,root,root) %{_libdir}/libgranite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgranite.so.5
+%attr(755,root,root) %ghost %{_libdir}/libgranite.so.6
 %{_libdir}/girepository-1.0/Granite-1.0.typelib
 %{_datadir}/metainfo/granite.appdata.xml
 %{_desktopdir}/io.elementary.granite.demo.desktop

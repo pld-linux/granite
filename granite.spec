@@ -73,16 +73,16 @@ API języka Vala do biblioteki libgranite.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	--default-library=shared \
 	-Ddocumentation=true
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 # not supported by glibc (as of 2.37)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,rue,sma}

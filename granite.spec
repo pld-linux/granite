@@ -19,7 +19,7 @@ BuildRequires:	meson >= 0.48.2
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	vala >= 2:0.48
 BuildRequires:	vala-libgee >= 0.8
 Requires(post,postun):	/sbin/ldconfig
